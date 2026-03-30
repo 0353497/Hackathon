@@ -1,4 +1,5 @@
 import 'package:care_alert/presentation/components/tab_page.dart';
+import 'package:care_alert/presentation/pages/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 
@@ -13,6 +14,7 @@ class _MainViewState extends State<MainView> {
   int _selectedIndex = 0;
 
   late final List<Widget> _pages = const [
+    Dashboard(),
     TabPage(titleKey: 'new_melding_page_title', icon: Icons.add),
     TabPage(
       titleKey: 'meldingen_page_title',
@@ -37,6 +39,11 @@ class _MainViewState extends State<MainView> {
           });
         },
         destinations: [
+          NavigationDestination(
+            icon: const Icon(Icons.dashboard_outlined),
+            selectedIcon: const Icon(Icons.dashboard),
+            label: 'dashboard'.tr,
+          ),
           NavigationDestination(
             icon: const Icon(Icons.add_alert_outlined),
             selectedIcon: const Icon(Icons.add_alert),

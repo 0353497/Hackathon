@@ -5,6 +5,7 @@ class AppTranslations extends Translations {
   Map<String, Map<String, String>> get keys => {
     'en': {
       'hello_world': 'Hello World!',
+      'dashboard': 'Dashboard',
       'new_melding': 'New alert',
       'meldingen': 'Alerts',
       'notificaties': 'Notifications',
@@ -16,6 +17,7 @@ class AppTranslations extends Translations {
     },
     'en_US': {
       'hello_world': 'Hello World!',
+      'dashboard': 'Dashboard',
       'new_melding': 'New alert',
       'meldingen': 'Alerts',
       'notificaties': 'Notifications',
@@ -27,6 +29,7 @@ class AppTranslations extends Translations {
     },
     'nl': {
       'hello_world': 'Hallo wereld!',
+      'dashboard': 'Dashboard',
       'new_melding': 'Nieuwe melding',
       'meldingen': 'Meldingen',
       'notificaties': 'Notificaties',
@@ -38,6 +41,7 @@ class AppTranslations extends Translations {
     },
     'nl_NL': {
       'hello_world': 'Hallo wereld!',
+      'dashboard': 'Dashboard',
       'new_melding': 'Nieuwe melding',
       'meldingen': 'Meldingen',
       'notificaties': 'Notificaties',
