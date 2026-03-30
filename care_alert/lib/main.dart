@@ -1,3 +1,4 @@
+import 'package:care_alert/presentation/pages/main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:care_alert/core/translations.dart';
@@ -29,7 +30,7 @@ class MainApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: Scaffold(body: Center(child: Text('hello_world'.tr))),
+      home: MainView(),
     );
   }
 }
