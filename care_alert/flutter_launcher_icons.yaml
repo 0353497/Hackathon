@@ -1,0 +1,34 @@
+flutter_launcher_icons:
+  ios: true
+  android: true
+  image_path: "assets/images/icon.png"
+  
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/icon_white.jpeg"
+  
+  ios_settings:
+    image_set_configs:
+      - size_width: 180
+        size_height: 180
+      - size_width: 120
+        size_height: 120
+      - size_width: 167
+        size_height: 167
+      - size_width: 152
+        size_height: 152
+      - size_width: 120
+        size_height: 120
+      - size_width: 87
+        size_height: 87
+      - size_width: 80
+        size_height: 80
+      - size_width: 60
+        size_height: 60
+      - size_width: 58
+        size_height: 58
+      - size_width: 40
+        size_height: 40
+      - size_width: 29
+        size_height: 29
+      - size_width: 20
+        size_height: 20
