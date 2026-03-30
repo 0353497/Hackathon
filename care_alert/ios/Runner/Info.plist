@@ -26,6 +26,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Deze app gebruikt de microfoon om spraak om te zetten naar tekst in incidentmeldingen.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Deze app gebruikt spraakherkenning om beschrijvingen sneller in te voeren.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

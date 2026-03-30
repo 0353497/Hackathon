@@ -1,4 +1,5 @@
 import 'package:care_alert/presentation/components/tab_page.dart';
+import 'package:care_alert/presentation/pages/create_alert_page.dart';
 import 'package:care_alert/presentation/pages/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
@@ -15,7 +16,7 @@ class _MainViewState extends State<MainView> {
 
   late final List<Widget> _pages = const [
     Dashboard(),
-    TabPage(titleKey: 'new_melding_page_title', icon: Icons.add),
+    CreateAlertPage(),
     TabPage(
       titleKey: 'meldingen_page_title',
       icon: Icons.warning_amber_outlined,

@@ -1,11 +1,13 @@
 import 'package:care_alert/presentation/pages/main_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:care_alert/core/translations.dart';
 import 'package:get/get.dart';
 
 void main() {
   runApp(const MainApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }
 
 class MainApp extends StatelessWidget {
