@@ -95,6 +95,10 @@ class DashboardView extends StatelessWidget {
                     const DashboardWeeklyTrendCard(),
                     const SizedBox(height: 20),
                     const DashboardSeverityDistributionCard(),
+                    const SizedBox(height: 20),
+                    const DashboardIncidentTypeCard(),
+                    const SizedBox(height: 20),
+                    const DashboardRecentAlertsCard(),
                   ],
                 ),
               ),
@@ -524,6 +528,357 @@ class _LegendRow extends StatelessWidget {
   }
 }
 
+class DashboardIncidentTypeCard extends StatelessWidget {
+  const DashboardIncidentTypeCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const values = [1.0, 1.0, 1.0, 1.0];
+    const labels = ['MIC', 'MIM', 'Agressie', 'Ongeval'];
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8F8F8),
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x14000000),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Meldingen per type',
+            style: TextStyle(
+              fontSize: 35,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF001B44),
+            ),
+          ),
+          const SizedBox(height: 6),
+          const Text(
+            'Overzicht van alle incidenttypes',
+            style: TextStyle(
+              color: Color(0xFF49618A),
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 14),
+          AspectRatio(
+            aspectRatio: 1.22,
+            child: CustomPaint(
+              painter: _IncidentTypeBarChartPainter(
+                values: values,
+                labels: labels,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DashboardRecentAlertsCard extends StatelessWidget {
+  const DashboardRecentAlertsCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const items = [
+      _RecentAlertItem(
+        type: 'MIC',
+        status: 'In behandeling',
+        statusColor: Color(0xFFE97A18),
+        statusBackground: Color(0xFFF7E5CF),
+        priority: 'Middel',
+        priorityColor: Color(0xFFE97A18),
+        priorityBackground: Color(0xFFF7E5CF),
+        description: 'Client is gevallen bij het opstaan uit bed. Geen zichtbare verwondingen.',
+        dateTime: '30 mrt, 09:15',
+        location: 'Afdeling A - Kamer 12',
+      ),
+      _RecentAlertItem(
+        type: 'MIM',
+        status: 'Afgehandeld',
+        statusColor: Color(0xFF0A9B50),
+        statusBackground: Color(0xFFD8F1E3),
+        priority: 'Hoog',
+        priorityColor: Color(0xFFD12D36),
+        priorityBackground: Color(0xFFF7DDE0),
+        description: 'Medewerker heeft zich geprikt aan naald tijdens medicijnvoorbereiding.',
+        dateTime: '29 mrt, 14:30',
+        location: 'Afdeling B - Medicijnkamer',
+      ),
+      _RecentAlertItem(
+        type: 'Brand',
+        status: 'Afgehandeld',
+        statusColor: Color(0xFF0A9B50),
+        statusBackground: Color(0xFFD8F1E3),
+        priority: 'Middel',
+        priorityColor: Color(0xFFE97A18),
+        priorityBackground: Color(0xFFF7E5CF),
+        description: 'Brandalarm gegaan vanwege aangebrande pan op het fornuis. Geen brand ontstaan.',
+        dateTime: '28 mrt, 11:00',
+        location: 'Keuken - Verdieping 2',
+      ),
+      _RecentAlertItem(
+        type: 'Agressie',
+        status: 'Open',
+        statusColor: Color(0xFFD12D36),
+        statusBackground: Color(0xFFF7DDE0),
+        priority: 'Laag',
+        priorityColor: Color(0xFF0A9B50),
+        priorityBackground: Color(0xFFD8F1E3),
+        description: 'Client heeft verbaal agressief gedrag vertoond richting medewerker tijdens ochtendroutine.',
+        dateTime: '30 mrt, 08:00',
+        location: 'Afdeling C - Gemeenschappelijke ruimte',
+      ),
+    ];
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8F8F8),
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x14000000),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Recente meldingen',
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF001B44),
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Laatste 4 meldingen',
+                      style: TextStyle(
+                        color: Color(0xFF49618A),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              OutlinedButton(
+                onPressed: () {},
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: const Color(0xFF111827),
+                  side: const BorderSide(color: Color(0xFFD1D5DB)),
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Row(
+                  children: [
+                    Text(
+                      'Bekijk alles',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(width: 6),
+                    Icon(Icons.north_east, size: 16),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          ...items.map(
+            (item) => Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: _RecentAlertListItem(item: item),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RecentAlertListItem extends StatelessWidget {
+  const _RecentAlertListItem({required this.item});
+
+  final _RecentAlertItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF3F4F6),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFE5E7EB)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              _StatusChip(
+                text: item.type,
+                textColor: const Color(0xFF1E63F0),
+                backgroundColor: const Color(0xFFE8EEF9),
+              ),
+              _StatusChip(
+                text: item.status,
+                textColor: item.statusColor,
+                backgroundColor: item.statusBackground,
+              ),
+              _StatusChip(
+                text: item.priority,
+                textColor: item.priorityColor,
+                backgroundColor: item.priorityBackground,
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  item.description,
+                  style: const TextStyle(
+                    color: Color(0xFF111827),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    height: 1.35,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              const Padding(
+                padding: EdgeInsets.only(top: 2),
+                child: Text(
+                  'Details',
+                  style: TextStyle(
+                    color: Color(0xFF111827),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
+            runSpacing: 6,
+            children: [
+              const Icon(Icons.calendar_today_outlined, size: 14, color: Color(0xFF6B7280)),
+              Text(
+                item.dateTime,
+                style: const TextStyle(
+                  color: Color(0xFF6B7280),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const Text('•', style: TextStyle(color: Color(0xFF6B7280))),
+              const Icon(Icons.person_outline, size: 14, color: Color(0xFF6B7280)),
+              Text(
+                item.location,
+                style: const TextStyle(
+                  color: Color(0xFF6B7280),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StatusChip extends StatelessWidget {
+  const _StatusChip({
+    required this.text,
+    required this.textColor,
+    required this.backgroundColor,
+  });
+
+  final String text;
+  final Color textColor;
+  final Color backgroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: textColor,
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
+}
+
+class _RecentAlertItem {
+  const _RecentAlertItem({
+    required this.type,
+    required this.status,
+    required this.statusColor,
+    required this.statusBackground,
+    required this.priority,
+    required this.priorityColor,
+    required this.priorityBackground,
+    required this.description,
+    required this.dateTime,
+    required this.location,
+  });
+
+  final String type;
+  final String status;
+  final Color statusColor;
+  final Color statusBackground;
+  final String priority;
+  final Color priorityColor;
+  final Color priorityBackground;
+  final String description;
+  final String dateTime;
+  final String location;
+}
+
 class _WeeklyLineChartPainter extends CustomPainter {
   const _WeeklyLineChartPainter({required this.values});
 
@@ -663,6 +1018,140 @@ class _WeeklyLineChartPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _WeeklyLineChartPainter oldDelegate) {
     return oldDelegate.values != values;
+  }
+}
+
+class _IncidentTypeBarChartPainter extends CustomPainter {
+  const _IncidentTypeBarChartPainter({
+    required this.values,
+    required this.labels,
+  });
+
+  final List<double> values;
+  final List<String> labels;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const axisColor = Color(0xFF94A3B8);
+    const gridColor = Color(0xFFD7DCE4);
+    const barColor = Color(0xFF5B8FE8);
+    const yLabels = ['0', '0.25', '0.5', '0.75', '1'];
+
+    final chartRect = Rect.fromLTRB(54, 12, size.width - 12, size.height - 32);
+
+    final gridPaint = Paint()
+      ..color = gridColor
+      ..strokeWidth = 1
+      ..style = PaintingStyle.stroke;
+
+    for (int i = 0; i <= 4; i++) {
+      final y = chartRect.bottom - (i / 4) * chartRect.height;
+      _drawDashedLine(
+        canvas,
+        Offset(chartRect.left, y),
+        Offset(chartRect.right, y),
+        gridPaint,
+      );
+    }
+
+    for (int i = 0; i < values.length; i++) {
+      final x = chartRect.left + i * (chartRect.width / values.length);
+      _drawDashedLine(
+        canvas,
+        Offset(x, chartRect.top),
+        Offset(x, chartRect.bottom),
+        gridPaint,
+      );
+    }
+
+    final axisPaint = Paint()
+      ..color = axisColor
+      ..strokeWidth = 1.5;
+    canvas.drawLine(
+      Offset(chartRect.left, chartRect.bottom),
+      Offset(chartRect.right, chartRect.bottom),
+      axisPaint,
+    );
+    canvas.drawLine(
+      Offset(chartRect.left, chartRect.top),
+      Offset(chartRect.left, chartRect.bottom),
+      axisPaint,
+    );
+
+    for (int i = 0; i < yLabels.length; i++) {
+      final y = chartRect.bottom - (i / 4) * chartRect.height;
+      final tp = TextPainter(
+        text: TextSpan(
+          text: yLabels[i],
+          style: const TextStyle(
+            color: Color(0xFF4B5563),
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      tp.paint(canvas, Offset(chartRect.left - 10 - tp.width, y - tp.height / 2));
+    }
+
+    final barSpace = chartRect.width / values.length;
+    final barWidth = barSpace * 0.72;
+    final barPaint = Paint()..color = barColor.withValues(alpha: 0.92);
+
+    for (int i = 0; i < values.length; i++) {
+      final barHeight = values[i].clamp(0.0, 1.0) * chartRect.height;
+      final left = chartRect.left + i * barSpace + (barSpace - barWidth) / 2;
+      final rect = RRect.fromRectAndRadius(
+        Rect.fromLTWH(left, chartRect.bottom - barHeight, barWidth, barHeight),
+        const Radius.circular(8),
+      );
+      canvas.drawRRect(rect, barPaint);
+    }
+
+    for (int i = 0; i < labels.length; i++) {
+      if (labels[i].isEmpty) {
+        continue;
+      }
+      final x = chartRect.left + i * barSpace + (barSpace / 2);
+      final tp = TextPainter(
+        text: TextSpan(
+          text: labels[i],
+          style: const TextStyle(
+            color: Color(0xFF4B5563),
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      tp.paint(canvas, Offset(x - tp.width / 2, chartRect.bottom + 6));
+    }
+  }
+
+  void _drawDashedLine(
+    Canvas canvas,
+    Offset start,
+    Offset end,
+    Paint paint,
+  ) {
+    const dashWidth = 4.0;
+    const dashSpace = 3.0;
+    final totalLength = (end - start).distance;
+    final direction = (end - start) / totalLength;
+    double drawn = 0;
+
+    while (drawn < totalLength) {
+      final currentStart = start + direction * drawn;
+      final currentEnd =
+          start + direction * math.min(drawn + dashWidth, totalLength);
+      canvas.drawLine(currentStart, currentEnd, paint);
+      drawn += dashWidth + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _IncidentTypeBarChartPainter oldDelegate) {
+    return oldDelegate.values != values || oldDelegate.labels != labels;
   }
 }
 
