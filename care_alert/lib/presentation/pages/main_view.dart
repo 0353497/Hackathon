@@ -1,6 +1,7 @@
 import 'package:care_alert/presentation/components/tab_page.dart';
 import 'package:care_alert/presentation/pages/create_alert_page.dart';
 import 'package:care_alert/presentation/pages/dashboard.dart';
+import 'package:care_alert/presentation/pages/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 
@@ -14,18 +15,18 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
   int _selectedIndex = 0;
 
-  late final List<Widget> _pages = const [
-    Dashboard(),
-    CreateAlertPage(),
-    TabPage(
+  late final List<Widget> _pages = [
+    const Dashboard(),
+    const CreateAlertPage(),
+    const TabPage(
       titleKey: 'meldingen_page_title',
       icon: Icons.warning_amber_outlined,
     ),
-    TabPage(
+    const TabPage(
       titleKey: 'notificaties_page_title',
       icon: Icons.notifications_active_outlined,
     ),
-    TabPage(titleKey: 'instellingen_page_title', icon: Icons.settings_outlined),
+    const SettingsPage(),
   ];
 
   @override
@@ -63,7 +64,7 @@ class _MainViewState extends State<MainView> {
           NavigationDestination(
             icon: const Icon(Icons.settings_outlined),
             selectedIcon: const Icon(Icons.settings),
-            label: 'instellingen'.tr,
+            label: 'Settings'.tr,
           ),
         ],
       ),
