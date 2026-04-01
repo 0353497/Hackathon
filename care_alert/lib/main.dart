@@ -20,14 +20,42 @@ void main() {
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
+  Locale _resolveLocale(Locale? deviceLocale) {
+    if (deviceLocale == null) {
+      return const Locale('en');
+    }
+
+    const supported = [
+      Locale('en'),
+      Locale('nl'),
+      Locale('en', 'US'),
+      Locale('nl', 'NL'),
+    ];
+
+    for (final locale in supported) {
+      if (locale.languageCode == deviceLocale.languageCode &&
+          locale.countryCode == deviceLocale.countryCode) {
+        return locale;
+      }
+    }
+
+    for (final locale in supported) {
+      if (locale.languageCode == deviceLocale.languageCode) {
+        return locale;
+      }
+    }
+
+    return const Locale('en');
+  }
+
   @override
   Widget build(BuildContext context) {
-    final deviceLanguageCode = Get.deviceLocale?.languageCode ?? 'en';
+    final resolvedLocale = _resolveLocale(Get.deviceLocale);
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return GetMaterialApp(
       translations: AppTranslations(),
-      locale: Locale(deviceLanguageCode),
+      locale: resolvedLocale,
       fallbackLocale: const Locale('en'),
       supportedLocales: const [
         Locale('en'),
@@ -35,6 +63,9 @@ class MainApp extends StatelessWidget {
         Locale('en', 'US'),
         Locale('nl', 'NL'),
       ],
+      localeResolutionCallback: (locale, supportedLocales) {
+        return _resolveLocale(locale);
+      },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
