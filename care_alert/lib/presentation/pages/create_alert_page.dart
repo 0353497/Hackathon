@@ -236,7 +236,7 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
                     _fieldLabel('alert_type_label'.tr, requiredField: true),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
-                      value: _selectedType,
+                      initialValue: _selectedType,
                       decoration: InputDecoration(
                         hintText: 'alert_type_hint'.tr,
                       ),
@@ -374,7 +374,7 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
                     _fieldLabel('severity_label'.tr, requiredField: true),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
-                      value: _selectedSeverity,
+                      initialValue: _selectedSeverity,
                       decoration: InputDecoration(hintText: 'severity_hint'.tr),
                       items: [
                         DropdownMenuItem(
