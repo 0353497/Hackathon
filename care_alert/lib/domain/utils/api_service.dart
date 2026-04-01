@@ -37,11 +37,7 @@ class ApiService {
 
     try {
       final response = await http
-          .post(
-            uri,
-          
-            body: jsonEncode(payload),
-          )
+          .post(uri, body: jsonEncode(payload))
           .timeout(_timeout);
 
       Map<String, dynamic>? body;
@@ -85,11 +81,7 @@ class ApiService {
     final uri = Uri.parse('$baseUrl/tickets');
 
     try {
-      final response = await http
-          .get(
-            uri,
-          )
-          .timeout(_timeout);
+      final response = await http.get(uri).timeout(_timeout);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final parsed = jsonDecode(response.body);
         List<Ticket> tickets = [];

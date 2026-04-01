@@ -8,6 +8,7 @@ class Ticket {
   final String employee;
   final String latitude;
   final String longitude;
+  final String? room;
   final String room_id;
   final String severity;
   final String status;
@@ -29,6 +30,7 @@ class Ticket {
     required this.status,
     required this.ticket,
     required this.title,
+    this.room = '',
   });
 
   Ticket copyWith({
@@ -41,6 +43,7 @@ class Ticket {
     String? employee,
     String? latitude,
     String? longitude,
+    String? room,
     String? room_id,
     String? severity,
     String? status,
@@ -57,6 +60,7 @@ class Ticket {
       employee: employee ?? this.employee,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
+      room: room ?? this.room,
       room_id: room_id ?? this.room_id,
       severity: severity ?? this.severity,
       status: status ?? this.status,
@@ -107,6 +111,7 @@ class Ticket {
       employee: parseString(json['employee']),
       latitude: parseString(json['latitude']),
       longitude: parseString(json['longitude']),
+      room: parseString(json['room']),
       room_id: parseString(json['room_id']),
       severity: parseString(json['severity']),
       status: parseString(json['status']),
@@ -127,6 +132,7 @@ class Ticket {
       'employee': employee,
       'latitude': latitude,
       'longitude': longitude,
+      'room': room,
       'room_id': room_id,
       'severity': severity,
       'status': status,
@@ -138,7 +144,9 @@ class Ticket {
 }
 
 enum severity { low, medium, high, critical }
+
 enum status { open, in_progress, closed }
+
 enum category {
   MIC,
   MIM,
