@@ -136,10 +136,6 @@ class _SettingsComponentState extends State<SettingsComponent> {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  OutlinedButton(
-                    onPressed: () {},
-                    child: const Text('Twee-factor authenticatie instellen'),
-                  ),
                 ],
               ),
             ),
