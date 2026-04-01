@@ -9,15 +9,15 @@ void main() {
         description: "teuiuk68i57",
         employee: "Employee 1",
         client: "Client A",
-        severity: "High",
-        category: "Geweld",
+        severity: "high",
+        category: "MIC",
         room_id: "Room 101",
         latitude: "52.370216",
         longitude: "4.895168",
         email_team_leader: "leader@test.com",
         adress: "Test Street 123",
         date: DateTime.now(),
-        status: "Open", 
+        status: "open", 
         ticket: '',
         
       );
