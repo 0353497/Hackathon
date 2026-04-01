@@ -41,6 +41,21 @@ class AppTranslations extends Translations {
       'listening_hint': 'Listening... Tap again to stop.',
       'stt_not_available':
           'Speech recognition is not available on this device.',
+      'use_current_location': 'Use current address',
+      'location_service_disabled': 'Location services are disabled.',
+      'location_permission_denied':
+          'Location permission was denied. Please allow location access.',
+      'location_fetch_failed':
+          'Could not fetch your current location. Please try again.',
+      'location_not_found': 'Could not resolve an address for this location.',
+      'location_set_success': 'Current address has been filled in.',
+      'personnel_number_label': 'Personnel number',
+      'personnel_number_hint': '6 digit personnel number',
+      'client_number_label': 'Client number',
+      'client_number_hint': '6 digit client number',
+      'number_must_be_six_digits': 'Number must contain exactly 6 digits',
+      'team_leader_label': 'Team leader',
+      'team_leader_hint': 'Team leader name',
     },
     'en_US': {
       'hello_world': 'Hello World!',
@@ -80,6 +95,21 @@ class AppTranslations extends Translations {
       'listening_hint': 'Listening... Tap again to stop.',
       'stt_not_available':
           'Speech recognition is not available on this device.',
+      'use_current_location': 'Use current address',
+      'location_service_disabled': 'Location services are disabled.',
+      'location_permission_denied':
+          'Location permission was denied. Please allow location access.',
+      'location_fetch_failed':
+          'Could not fetch your current location. Please try again.',
+      'location_not_found': 'Could not resolve an address for this location.',
+      'location_set_success': 'Current address has been filled in.',
+      'personnel_number_label': 'Personnel number',
+      'personnel_number_hint': '6 digit personnel number',
+      'client_number_label': 'Client number',
+      'client_number_hint': '6 digit client number',
+      'number_must_be_six_digits': 'Number must contain exactly 6 digits',
+      'team_leader_label': 'Team leader',
+      'team_leader_hint': 'Team leader name',
     },
     'nl': {
       'hello_world': 'Hallo wereld!',
@@ -119,6 +149,21 @@ class AppTranslations extends Translations {
       'listening_hint': 'Aan het luisteren... Tik opnieuw om te stoppen.',
       'stt_not_available':
           'Spraakherkenning is niet beschikbaar op dit apparaat.',
+      'use_current_location': 'Gebruik huidig adres',
+      'location_service_disabled': 'Locatieservices staan uit.',
+      'location_permission_denied':
+          'Locatietoestemming geweigerd. Geef toegang tot locatie.',
+      'location_fetch_failed':
+          'Kon je huidige locatie niet ophalen. Probeer opnieuw.',
+      'location_not_found': 'Kon geen adres bepalen voor deze locatie.',
+      'location_set_success': 'Huidig adres is ingevuld.',
+      'personnel_number_label': 'Personeelsnummer',
+      'personnel_number_hint': '6-cijferig personeelsnummer',
+      'client_number_label': 'Clientnummer',
+      'client_number_hint': '6-cijferig clientnummer',
+      'number_must_be_six_digits': 'Nummer moet precies 6 cijfers bevatten',
+      'team_leader_label': 'Teamleider',
+      'team_leader_hint': 'Naam van teamleider',
     },
     'nl_NL': {
       'hello_world': 'Hallo wereld!',
@@ -158,6 +203,21 @@ class AppTranslations extends Translations {
       'listening_hint': 'Aan het luisteren... Tik opnieuw om te stoppen.',
       'stt_not_available':
           'Spraakherkenning is niet beschikbaar op dit apparaat.',
+      'use_current_location': 'Gebruik huidig adres',
+      'location_service_disabled': 'Locatieservices staan uit.',
+      'location_permission_denied':
+          'Locatietoestemming geweigerd. Geef toegang tot locatie.',
+      'location_fetch_failed':
+          'Kon je huidige locatie niet ophalen. Probeer opnieuw.',
+      'location_not_found': 'Kon geen adres bepalen voor deze locatie.',
+      'location_set_success': 'Huidig adres is ingevuld.',
+      'personnel_number_label': 'Personeelsnummer',
+      'personnel_number_hint': '6-cijferig personeelsnummer',
+      'client_number_label': 'Clientnummer',
+      'client_number_hint': '6-cijferig clientnummer',
+      'number_must_be_six_digits': 'Nummer moet precies 6 cijfers bevatten',
+      'team_leader_label': 'Teamleider',
+      'team_leader_hint': 'Naam van teamleider',
     },
   };
 }

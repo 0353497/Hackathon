@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:care_alert/core/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:location/location.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class CreateAlertPage extends StatefulWidget {
@@ -15,9 +21,14 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _peopleController = TextEditingController();
+  final TextEditingController _personnelNumberController =
+      TextEditingController();
+  final TextEditingController _clientNumberController = TextEditingController();
+  final TextEditingController _teamLeaderController = TextEditingController();
 
   bool _speechAvailable = false;
   bool _isListening = false;
+  bool _isFetchingLocation = false;
   String? _selectedType;
   String? _selectedSeverity;
 
@@ -38,6 +49,9 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
     _locationController.dispose();
     _descriptionController.dispose();
     _peopleController.dispose();
+    _personnelNumberController.dispose();
+    _clientNumberController.dispose();
+    _teamLeaderController.dispose();
     super.dispose();
   }
 
@@ -93,6 +107,100 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
     );
   }
 
+  Future<void> _fillCurrentAddress() async {
+    if (_isFetchingLocation) {
+      return;
+    }
+
+    setState(() {
+      _isFetchingLocation = true;
+    });
+
+    try {
+      final location = Location();
+      var serviceEnabled = await location.serviceEnabled();
+      if (!serviceEnabled) {
+        serviceEnabled = await location.requestService();
+      }
+
+      if (!serviceEnabled) {
+        _showSnackBar('location_service_disabled'.tr);
+        return;
+      }
+
+      var permission = await location.hasPermission();
+      if (permission == PermissionStatus.denied) {
+        permission = await location.requestPermission();
+      }
+
+      if (permission != PermissionStatus.granted) {
+        _showSnackBar('location_permission_denied'.tr);
+        return;
+      }
+
+      final currentLocation = await location.getLocation();
+      final latitude = currentLocation.latitude;
+      final longitude = currentLocation.longitude;
+
+      if (latitude == null || longitude == null) {
+        _showSnackBar('location_fetch_failed'.tr);
+        return;
+      }
+
+      final locale = Get.locale?.languageCode == 'nl' ? 'nl' : 'en';
+      final uri = Uri.https('nominatim.openstreetmap.org', '/reverse', {
+        'format': 'jsonv2',
+        'lat': latitude.toString(),
+        'lon': longitude.toString(),
+        'accept-language': locale,
+      });
+
+      final response = await http.get(
+        uri,
+        headers: const {
+          'User-Agent': 'care_alert_app/1.0',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        _showSnackBar('location_fetch_failed'.tr);
+        return;
+      }
+
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      final address = (data['display_name'] as String?)?.trim();
+
+      if (address == null || address.isEmpty) {
+        _showSnackBar('location_not_found'.tr);
+        return;
+      }
+
+      _locationController.text = address;
+      _locationController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _locationController.text.length),
+      );
+      _showSnackBar('location_set_success'.tr);
+    } catch (_) {
+      _showSnackBar('location_fetch_failed'.tr);
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isFetchingLocation = false;
+        });
+      }
+    }
+  }
+
+  void _showSnackBar(String message) {
+    if (!mounted) {
+      return;
+    }
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,7 +218,7 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
               Text(
                 'create_alert_subtitle'.tr,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Colors.blueGrey.shade700,
+                  color: AppColors.textSecondary,
                 ),
               ),
               const SizedBox(height: 24),
@@ -118,7 +226,8 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(22),
-                  border: Border.all(color: Colors.grey.shade300),
+                  border: Border.all(color: const Color(0xFFDDDEE3)),
+                  color: AppColors.surface,
                 ),
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -130,12 +239,6 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
                       value: _selectedType,
                       decoration: InputDecoration(
                         hintText: 'alert_type_hint'.tr,
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(14),
-                          borderSide: BorderSide.none,
-                        ),
                       ),
                       items: [
                         DropdownMenuItem(
@@ -169,35 +272,87 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
                     Text(
                       'date_time_auto_hint'.tr,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.blueGrey.shade700,
+                        color: AppColors.textSecondary,
                       ),
                     ),
                     const SizedBox(height: 20),
                     _fieldLabel('location_label'.tr, requiredField: true),
                     const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _textField(
+                            controller: _locationController,
+                            hint: 'location_hint'.tr,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        _locationButton(),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    _fieldLabel('personnel_number_label'.tr),
+                    const SizedBox(height: 8),
                     _textField(
-                      controller: _locationController,
-                      hint: 'location_hint'.tr,
+                      controller: _personnelNumberController,
+                      hint: 'personnel_number_hint'.tr,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      maxLength: 6,
+                      onChanged: (_) => setState(() {}),
+                      errorText:
+                          _personnelNumberController.text.isNotEmpty &&
+                              _personnelNumberController.text.length != 6
+                          ? 'number_must_be_six_digits'.tr
+                          : null,
+                    ),
+                    const SizedBox(height: 20),
+                    _fieldLabel('client_number_label'.tr),
+                    const SizedBox(height: 8),
+                    _textField(
+                      controller: _clientNumberController,
+                      hint: 'client_number_hint'.tr,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      maxLength: 6,
+                      onChanged: (_) => setState(() {}),
+                      errorText:
+                          _clientNumberController.text.isNotEmpty &&
+                              _clientNumberController.text.length != 6
+                          ? 'number_must_be_six_digits'.tr
+                          : null,
+                    ),
+                    const SizedBox(height: 20),
+                    _fieldLabel('team_leader_label'.tr),
+                    const SizedBox(height: 8),
+                    _textField(
+                      controller: _teamLeaderController,
+                      hint: 'team_leader_hint'.tr,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r"[a-zA-Z\s'\-]"),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 20),
                     _fieldLabel('description_label'.tr, requiredField: true),
                     const SizedBox(height: 8),
-                    _textField(
-                      controller: _descriptionController,
-                      hint: 'description_hint'.tr,
-                      maxLines: 4,
-                      suffixIcon: IconButton(
-                        onPressed: _toggleListening,
-                        tooltip: _isListening
-                            ? 'stop_recording_tooltip'.tr
-                            : 'start_recording_tooltip'.tr,
-                        icon: Icon(
-                          _isListening ? Icons.mic : Icons.mic_none,
-                          color: _isListening
-                              ? Colors.red.shade400
-                              : Colors.blueGrey.shade700,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: _textField(
+                            controller: _descriptionController,
+                            hint: 'description_hint'.tr,
+                            maxLines: 4,
+                          ),
                         ),
-                      ),
+                        const SizedBox(width: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 2),
+                          child: _micButton(),
+                        ),
+                      ],
                     ),
                     if (_isListening) ...[
                       const SizedBox(height: 8),
@@ -220,15 +375,7 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
                       value: _selectedSeverity,
-                      decoration: InputDecoration(
-                        hintText: 'severity_hint'.tr,
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(14),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
+                      decoration: InputDecoration(hintText: 'severity_hint'.tr),
                       items: [
                         DropdownMenuItem(
                           value: 'low',
@@ -268,7 +415,7 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
       text: TextSpan(
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
           fontWeight: FontWeight.w700,
-          color: Colors.black,
+          color: AppColors.textPrimary,
         ),
         children: [
           TextSpan(text: text),
@@ -286,13 +433,66 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
     return TextFormField(
       enabled: false,
       initialValue: value,
-      style: TextStyle(color: Colors.blueGrey.shade400, fontSize: 16),
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.grey.shade100,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide.none,
+      style: const TextStyle(color: Color(0xFF848B9B), fontSize: 16),
+      decoration: InputDecoration(hintText: ''),
+    );
+  }
+
+  Widget _locationButton() {
+    return SizedBox(
+      width: 52,
+      height: 52,
+      child: Tooltip(
+        message: 'use_current_location'.tr,
+        child: ElevatedButton(
+          onPressed: _isFetchingLocation ? null : _fillCurrentAddress,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primaryBlue,
+            foregroundColor: Colors.white,
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            elevation: 6,
+            shadowColor: AppColors.primaryBlue.withValues(alpha: 0.35),
+          ),
+          child: _isFetchingLocation
+              ? const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.white,
+                  ),
+                )
+              : const Icon(Icons.my_location_rounded, size: 20),
+        ),
+      ),
+    );
+  }
+
+  Widget _micButton() {
+    return SizedBox(
+      width: 52,
+      height: 52,
+      child: Tooltip(
+        message: _isListening
+            ? 'stop_recording_tooltip'.tr
+            : 'start_recording_tooltip'.tr,
+        child: ElevatedButton(
+          onPressed: _toggleListening,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: _isListening ? Colors.red : AppColors.primaryBlue,
+            foregroundColor: Colors.white,
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            elevation: 6,
+            shadowColor: (_isListening ? Colors.red : AppColors.primaryBlue)
+                .withValues(alpha: 0.35),
+          ),
+          child: Icon(_isListening ? Icons.mic : Icons.mic_none, size: 20),
         ),
       ),
     );
@@ -303,19 +503,24 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
     required String hint,
     int maxLines = 1,
     Widget? suffixIcon,
+    TextInputType? keyboardType,
+    List<TextInputFormatter>? inputFormatters,
+    int? maxLength,
+    ValueChanged<String>? onChanged,
+    String? errorText,
   }) {
     return TextFormField(
       controller: controller,
       maxLines: maxLines,
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
+      maxLength: maxLength,
+      onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hint,
-        filled: true,
-        fillColor: Colors.grey.shade100,
         suffixIcon: suffixIcon,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide.none,
-        ),
+        counterText: '',
+        errorText: errorText,
       ),
     );
   }
