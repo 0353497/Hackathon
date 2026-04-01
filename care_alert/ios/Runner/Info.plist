@@ -30,6 +30,8 @@
 	<string>Deze app gebruikt de microfoon om spraak om te zetten naar tekst in incidentmeldingen.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Deze app gebruikt je locatie om automatisch het huidige adres in te vullen bij een melding.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Authenticate to continue.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Deze app gebruikt spraakherkenning om beschrijvingen sneller in te voeren.</string>
 	<key>UIApplicationSceneManifest</key>
