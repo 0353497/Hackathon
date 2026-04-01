@@ -1,13 +1,19 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
+<<<<<<< dashboardv2
+import 'package:care_alert/presentation/components/layout.dart';
+=======
+>>>>>>> master
 import 'package:get/get.dart';
 
 class DashboardView extends StatelessWidget {
-  const DashboardView({super.key});
+  const DashboardView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< dashboardv2
+    return LayoutPage(
+      child: DashboardContent(),
+=======
     final textTheme = Theme.of(context).textTheme;
 
     return ColoredBox(
@@ -103,34 +109,58 @@ class DashboardView extends StatelessWidget {
           ],
         ),
       ),
+>>>>>>> master
     );
   }
 }
 
-class DashboardTopHeader extends StatelessWidget {
-  const DashboardTopHeader({super.key});
+class DashboardContent extends StatelessWidget {
+  const DashboardContent({Key? key}) : super(key: key);
+
+  static const List<Map<String, dynamic>> hoofdMeldingen = [
+    {
+      'id': 'zorg',
+      'titleKey': 'dashboard_card_care_title',
+      'subtitleKey': 'dashboard_card_care_subtitle',
+      'descriptionKey': 'dashboard_card_care_description',
+      'icon': Icons.favorite,
+      'color': Colors.pink,
+      'bgColor': Color(0xFFFFF1F3),
+      'borderColor': Color(0xFFF8BBD0),
+      'iconBg': Color(0xFFF8BBD0),
+      'iconColor': Color(0xFFD81B60),
+      'category': 'zorg',
+    },
+    {
+      'id': 'facilitair',
+      'titleKey': 'dashboard_card_facility_title',
+      'subtitleKey': 'dashboard_card_facility_subtitle',
+      'descriptionKey': 'dashboard_card_facility_description',
+      'icon': Icons.apartment,
+      'color': Colors.blue,
+      'bgColor': Color(0xFFE3F2FD),
+      'borderColor': Color(0xFF90CAF9),
+      'iconBg': Color(0xFF90CAF9),
+      'iconColor': Color(0xFF1976D2),
+      'category': 'facilitair',
+    },
+  ];
+
+  void handleMeldingClick(BuildContext context, String category) {
+    Navigator.pushNamed(context, '/nieuwe-melding', arguments: {'category': category});
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 14),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF1D6BFF), Color(0xFF1145CF)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x40000000),
-            blurRadius: 12,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
+    return SingleChildScrollView(
+      physics:const  AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+      child: Column(
         children: [
+<<<<<<< dashboardv2
+          // Header
+          Column(
+=======
           Container(
             width: 40,
             height: 40,
@@ -146,127 +176,108 @@ class DashboardTopHeader extends StatelessWidget {
           const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+>>>>>>> master
             children: [
+              const SizedBox(height: 16),
               Text(
+<<<<<<< dashboardv2
+                'dashboard_welcome'.tr,
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+=======
                 'dashboard_brand_name'.tr,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                 ),
+>>>>>>> master
               ),
+              const SizedBox(height: 8),
               Text(
+<<<<<<< dashboardv2
+                'dashboard_question'.tr,
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'textHint'.tr,
+                style: TextStyle(fontSize: 14, color: Colors.grey),
+                textAlign: TextAlign.center,
+=======
                 'dashboard_brand_subtitle'.tr,
                 style: TextStyle(
                   color: Color(0xFFD8E5FF),
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
+>>>>>>> master
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class DashboardActionButton extends StatelessWidget {
-  const DashboardActionButton({
-    super.key,
-    required this.backgroundColor,
-    required this.label,
-    required this.icon,
-    required this.onPressed,
-  });
-
-  final Color backgroundColor;
-  final String label;
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      icon: Icon(icon, size: 16),
-      label: Text(label),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        textStyle: const TextStyle(fontWeight: FontWeight.w700),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 8,
-        shadowColor: backgroundColor.withValues(alpha: 0.35),
-      ),
-    );
-  }
-}
-
-class DashboardStatsCard extends StatelessWidget {
-  const DashboardStatsCard({
-    super.key,
-    required this.count,
-    required this.title,
-    required this.tagLabel,
-    required this.baseColor,
-    required this.highlightColor,
-    required this.leadingIcon,
-  });
-
-  final int count;
-  final String title;
-  final String tagLabel;
-  final Color baseColor;
-  final Color highlightColor;
-  final IconData leadingIcon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(20, 18, 20, 20),
-      decoration: BoxDecoration(
-        color: baseColor,
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: [
-          BoxShadow(
-            color: baseColor.withValues(alpha: 0.22),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            right: -36,
-            top: -44,
-            child: Container(
-              width: 110,
-              height: 110,
-              decoration: BoxDecoration(
-                color: highlightColor.withValues(alpha: 0.52),
-                shape: BoxShape.circle,
-              ),
+          const SizedBox(height: 16),
+          // Nieuwe Melding
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'dashboard_new_report'.tr,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.18),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(leadingIcon, color: Colors.white),
+          const SizedBox(height: 8),
+          GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisSpacing: 12,
+            childAspectRatio: 0.9,
+            mainAxisSpacing: 12,
+            children: hoofdMeldingen.map((type) {
+              return GestureDetector(
+                onTap: () => handleMeldingClick(context, type['category']),
+                child: Card(
+                  color: type['bgColor'],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    side: BorderSide(color: type['borderColor']),
                   ),
+<<<<<<< dashboardv2
+                  elevation: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: type['iconBg'],
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          width: 56,
+                          height: 56,
+                          child: Icon(type['icon'], color: type['iconColor'], size: 32),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          (type['titleKey'] as String).tr,
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          (type['subtitleKey'] as String).tr,
+                          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          (type['descriptionKey'] as String).tr,
+                          style: const TextStyle(fontSize: 11, color: Colors.grey),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+=======
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
@@ -347,11 +358,32 @@ class DashboardWeeklyTrendCard extends StatelessWidget {
                   fontSize: 33,
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF001B44),
+>>>>>>> master
                 ),
-              ),
-              Row(
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: 16),
+          // Info sectie
+          Card(
+            color: Colors.blue[50],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: BorderSide(color: Colors.blue),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+<<<<<<< dashboardv2
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: Colors.blue[100],
+                      shape: BoxShape.circle,
+=======
                     padding: const EdgeInsets.symmetric(
                       horizontal: 14,
                       vertical: 5,
@@ -367,8 +399,61 @@ class DashboardWeeklyTrendCard extends StatelessWidget {
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
+>>>>>>> master
+                    ),
+                    child: const Center(child: Text('💡', style: TextStyle(fontSize: 24))),
+                  ),
+<<<<<<< dashboardv2
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('dashboard_how_it_works'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 6),
+                        Text('dashboard_step_1'.tr),
+                        Text('dashboard_step_2'.tr),
+                        Text('dashboard_step_3'.tr),
+                        Text('dashboard_step_4'.tr),
+                        const SizedBox(height: 8),
+                        Text(
+                          'dashboard_auto_info'.tr,
+                          style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
                   ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          // Snelle toegang
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: () => Navigator.pushNamed(context, '/meldingen'),
+                  icon: const Icon(Icons.description),
+                  label: Text('dashboard_my_reports'.tr),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: () => Navigator.pushNamed(context, '/rapportages'),
+                  icon: const Icon(Icons.access_time),
+                  label: Text('dashboard_soap_reports'.tr),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+=======
                   const SizedBox(width: 8),
                   Text(
                     'dashboard_month'.tr,
@@ -726,3 +811,4 @@ class _SeverityDonutPainter extends CustomPainter {
         oldDelegate.high != high;
   }
 }
+>>>>>>> master

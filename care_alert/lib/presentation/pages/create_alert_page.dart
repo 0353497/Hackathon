@@ -5,6 +5,7 @@ import 'package:care_alert/domain/models/ticket.dart';
 import 'package:care_alert/domain/utils/api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:care_alert/presentation/components/layout.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -266,11 +267,10 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
-          child: Column(
+    return LayoutPage(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+        child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -489,7 +489,6 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
               ),
             ],
           ),
-        ),
       ),
     );
   }
