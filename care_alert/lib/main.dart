@@ -3,6 +3,7 @@ import 'package:care_alert/domain/utils/biometric_auth_service.dart';
 import 'package:care_alert/presentation/pages/main_view.dart';
 import 'package:care_alert/presentation/pages/login_page.dart';
 import 'package:care_alert/presentation/core/auth_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:care_alert/presentation/core/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,8 +12,11 @@ import 'package:care_alert/core/translations.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  Get.put(AuthController());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final authController = Get.put(AuthController());
+  await authController.loadSession();
 
   runApp(
     ChangeNotifierProvider(
@@ -188,10 +192,26 @@ class _AppLockGateState extends State<AppLockGate> {
                 ),
               const SizedBox(height: 20),
               if (!_isChecking)
-                ElevatedButton.icon(
-                  onPressed: _unlockApp,
-                  icon: const Icon(Icons.lock_open),
-                  label: const Text('Ontgrendel met biometrie'),
+                Column(
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: _unlockApp,
+                      icon: const Icon(Icons.lock_open),
+                      label: const Text('Ontgrendel met biometrie'),
+                    ),
+                    if (kDebugMode) ...[
+                      const SizedBox(height: 10),
+                      TextButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            _isUnlocked = true;
+                          });
+                        },
+                        icon: const Icon(Icons.skip_next),
+                        label: const Text('Skip (development)'),
+                      ),
+                    ],
+                  ],
                 ),
             ],
           ),
