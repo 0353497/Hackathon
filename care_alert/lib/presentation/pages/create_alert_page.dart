@@ -23,6 +23,7 @@ class CreateAlertPage extends StatefulWidget {
 class _CreateAlertPageState extends State<CreateAlertPage> {
   final SpeechToText _speechToText = SpeechToText();
   final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _roomController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _peopleController = TextEditingController();
   final TextEditingController _personnelNumberController =
@@ -111,6 +112,7 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
   void dispose() {
     _speechToText.stop();
     _locationController.dispose();
+    _roomController.dispose();
     _descriptionController.dispose();
     _peopleController.dispose();
     _personnelNumberController.dispose();
@@ -271,224 +273,221 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
         child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'new_melding'.tr,
-                style: Theme.of(context).textTheme.headlineLarge,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'new_melding'.tr,
+              style: Theme.of(context).textTheme.headlineLarge,
+            ),
+            const SizedBox(height: 6),
+            Text(
+              'create_alert_subtitle'.tr,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(color: AppColors.textSecondary),
+            ),
+            const SizedBox(height: 24),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(22),
+                border: Border.all(color: const Color(0xFFDDDEE3)),
+                color: AppColors.surface,
               ),
-              const SizedBox(height: 6),
-              Text(
-                'create_alert_subtitle'.tr,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-              ),
-              const SizedBox(height: 24),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(22),
-                  border: Border.all(color: const Color(0xFFDDDEE3)),
-                  color: AppColors.surface,
-                ),
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _fieldLabel('alert_type_label'.tr, requiredField: true),
-                    const SizedBox(height: 8),
-                    DropdownButtonFormField<String>(
-                      initialValue: _selectedType,
-                      decoration: InputDecoration(
-                        hintText: 'alert_type_hint'.tr,
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _fieldLabel('alert_type_label'.tr, requiredField: true),
+                  const SizedBox(height: 8),
+                  DropdownButtonFormField<String>(
+                    initialValue: _selectedType,
+                    decoration: InputDecoration(hintText: 'alert_type_hint'.tr),
+                    items: [
+                      DropdownMenuItem(value: 'MIC', child: Text('MIC'.tr)),
+                      DropdownMenuItem(value: 'MIM', child: Text('MIM'.tr)),
+                      DropdownMenuItem(
+                        value: 'brandmelding',
+                        child: Text('Brandmelding'.tr),
                       ),
-                      items: [
-                        DropdownMenuItem(
-                          value: 'fall',
-                          child: Text('alert_type_fall'.tr),
-                        ),
-                        DropdownMenuItem(
-                          value: 'aggression',
-                          child: Text('alert_type_aggression'.tr),
-                        ),
-                        DropdownMenuItem(
-                          value: 'medical',
-                          child: Text('alert_type_medical'.tr),
-                        ),
-                        DropdownMenuItem(
-                          value: 'other',
-                          child: Text('alert_type_other'.tr),
-                        ),
-                      ],
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedType = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    _fieldLabel('date_time_label'.tr),
-                    const SizedBox(height: 8),
-                    _dateTimePickerField(),
-                    const SizedBox(height: 8),
-                    Text(
-                      'date_time_auto_hint'.tr,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.textSecondary,
+                      DropdownMenuItem(
+                        value: 'ongeval/bijna-incident',
+                        child: Text('ongeval/bijna-incident'.tr),
                       ),
+                      DropdownMenuItem(value: 'it', child: Text('it'.tr)),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedType = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  _fieldLabel('date_time_label'.tr),
+                  const SizedBox(height: 8),
+                  _dateTimePickerField(),
+                  const SizedBox(height: 8),
+                  Text(
+                    'date_time_auto_hint'.tr,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.textSecondary,
                     ),
-                    const SizedBox(height: 20),
-                    _fieldLabel('location_label'.tr, requiredField: true),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _textField(
-                            controller: _locationController,
-                            hint: 'location_hint'.tr,
-                          ),
+                  ),
+                  const SizedBox(height: 20),
+                  _fieldLabel('location_label'.tr, requiredField: true),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _textField(
+                          controller: _locationController,
+                          hint: 'location_hint'.tr,
                         ),
-                        const SizedBox(width: 10),
-                        _locationButton(),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    _fieldLabel('personnel_number_label'.tr),
-                    const SizedBox(height: 8),
-                    _textField(
-                      controller: _personnelNumberController,
-                      hint: 'personnel_number_hint'.tr,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      maxLength: 6,
-                      onChanged: (_) => setState(() {}),
-                      errorText:
-                          _personnelNumberController.text.isNotEmpty &&
-                              _personnelNumberController.text.length != 6
-                          ? 'number_must_be_six_digits'.tr
-                          : null,
-                    ),
-                    const SizedBox(height: 20),
-                    _fieldLabel('client_number_label'.tr),
-                    const SizedBox(height: 8),
-                    _textField(
-                      controller: _clientNumberController,
-                      hint: 'client_number_hint'.tr,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      maxLength: 6,
-                      onChanged: (_) => setState(() {}),
-                      errorText:
-                          _clientNumberController.text.isNotEmpty &&
-                              _clientNumberController.text.length != 6
-                          ? 'number_must_be_six_digits'.tr
-                          : null,
-                    ),
-                    const SizedBox(height: 20),
-                    _fieldLabel('team_leader_label'.tr),
-                    const SizedBox(height: 8),
-                    _textField(
-                      controller: _teamLeaderController,
-                      hint: 'team_leader_hint'.tr,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Z\s'\-]"),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    _fieldLabel('description_label'.tr, requiredField: true),
-                    const SizedBox(height: 8),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: _textField(
-                            controller: _descriptionController,
-                            hint: 'description_hint'.tr,
-                            maxLines: 4,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 2),
-                          child: _micButton(),
-                        ),
-                      ],
-                    ),
-                    if (_isListening) ...[
-                      const SizedBox(height: 8),
-                      Text(
-                        'listening_hint'.tr,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.red.shade400,
-                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      _locationButton(),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  _fieldLabel('room_label'.tr),
+                  const SizedBox(height: 8),
+                  _textField(controller: _roomController, hint: 'room_hint'.tr),
+                  const SizedBox(height: 20),
+                  _fieldLabel('personnel_number_label'.tr),
+                  const SizedBox(height: 8),
+                  _textField(
+                    controller: _personnelNumberController,
+                    hint: 'personnel_number_hint'.tr,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    maxLength: 6,
+                    onChanged: (_) => setState(() {}),
+                    errorText:
+                        _personnelNumberController.text.isNotEmpty &&
+                            _personnelNumberController.text.length != 6
+                        ? 'number_must_be_six_digits'.tr
+                        : null,
+                  ),
+                  const SizedBox(height: 20),
+                  _fieldLabel('client_number_label'.tr),
+                  const SizedBox(height: 8),
+                  _textField(
+                    controller: _clientNumberController,
+                    hint: 'client_number_hint'.tr,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    maxLength: 6,
+                    onChanged: (_) => setState(() {}),
+                    errorText:
+                        _clientNumberController.text.isNotEmpty &&
+                            _clientNumberController.text.length != 6
+                        ? 'number_must_be_six_digits'.tr
+                        : null,
+                  ),
+                  const SizedBox(height: 20),
+                  _fieldLabel('team_leader_label'.tr),
+                  const SizedBox(height: 8),
+                  _textField(
+                    controller: _teamLeaderController,
+                    hint: 'team_leader_hint'.tr,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r"[a-zA-Z\s'\-]"),
                       ),
                     ],
-                    const SizedBox(height: 20),
-                    _fieldLabel('involved_people_label'.tr),
+                  ),
+                  const SizedBox(height: 20),
+                  _fieldLabel('description_label'.tr, requiredField: true),
+                  const SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: _textField(
+                          controller: _descriptionController,
+                          hint: 'description_hint'.tr,
+                          maxLines: 4,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: _micButton(),
+                      ),
+                    ],
+                  ),
+                  if (_isListening) ...[
                     const SizedBox(height: 8),
-                    _textField(
-                      controller: _peopleController,
-                      hint: 'involved_people_hint'.tr,
-                    ),
-                    const SizedBox(height: 20),
-                    _fieldLabel('severity_label'.tr, requiredField: true),
-                    const SizedBox(height: 8),
-                    DropdownButtonFormField<String>(
-                      initialValue: _selectedSeverity,
-                      decoration: InputDecoration(hintText: 'severity_hint'.tr),
-                      items: [
-                        DropdownMenuItem(
-                          value: 'low',
-                          child: Text('severity_low'.tr),
-                        ),
-                        DropdownMenuItem(
-                          value: 'medium',
-                          child: Text('severity_medium'.tr),
-                        ),
-                        DropdownMenuItem(
-                          value: 'high',
-                          child: Text('severity_high'.tr),
-                        ),
-                        DropdownMenuItem(
-                          value: 'critical',
-                          child: Text('severity_critical'.tr),
-                        ),
-                      ],
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedSeverity = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: _submitAlert,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryBlue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: Text(
-                          'send_alert'.tr,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                    Text(
+                      'listening_hint'.tr,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.red.shade400,
                       ),
                     ),
                   ],
-                ),
+                  const SizedBox(height: 20),
+                  _fieldLabel('involved_people_label'.tr),
+                  const SizedBox(height: 8),
+                  _textField(
+                    controller: _peopleController,
+                    hint: 'involved_people_hint'.tr,
+                  ),
+                  const SizedBox(height: 20),
+                  _fieldLabel('severity_label'.tr, requiredField: true),
+                  const SizedBox(height: 8),
+                  DropdownButtonFormField<String>(
+                    initialValue: _selectedSeverity,
+                    decoration: InputDecoration(hintText: 'severity_hint'.tr),
+                    items: [
+                      DropdownMenuItem(
+                        value: 'low',
+                        child: Text('severity_low'.tr),
+                      ),
+                      DropdownMenuItem(
+                        value: 'medium',
+                        child: Text('severity_medium'.tr),
+                      ),
+                      DropdownMenuItem(
+                        value: 'high',
+                        child: Text('severity_high'.tr),
+                      ),
+                      DropdownMenuItem(
+                        value: 'critical',
+                        child: Text('severity_critical'.tr),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedSeverity = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: _submitAlert,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryBlue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        'send_alert'.tr,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -499,26 +498,31 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
       return;
     }
 
-    if (_locationController.text.isEmpty) {
+    final locationText = _locationController.text.trim();
+    final roomText = _roomController.text.trim();
+    final descriptionText = _descriptionController.text.trim();
+
+    if (locationText.isEmpty) {
       _showSnackBar('location_required'.tr);
       return;
     }
 
-    if (_descriptionController.text.isEmpty) {
+    if (descriptionText.isEmpty) {
       _showSnackBar('description_required'.tr);
       return;
     }
 
     final ticket = Ticket(
-      adress: _locationController.text,
+      adress: locationText,
       category: _selectedType ?? '',
       client: _clientNumberController.text,
       date: _selectedDateTime,
-      description: _descriptionController.text,
+      description: descriptionText,
       email_team_leader: _teamLeaderController.text,
       employee: _personnelNumberController.text,
       latitude: '',
       longitude: '',
+      room: roomText,
       room_id: '',
       severity: _selectedSeverity ?? '',
       status: 'open',
@@ -544,6 +548,7 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
       _selectedSeverity = null;
       _selectedDateTime = DateTime.now();
       _locationController.clear();
+      _roomController.clear();
       _descriptionController.clear();
       _peopleController.clear();
       _personnelNumberController.clear();

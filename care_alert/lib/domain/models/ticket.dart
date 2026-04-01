@@ -8,7 +8,7 @@ class Ticket {
   final String employee;
   final String latitude;
   final String longitude;
-  final String? room;
+  final String room;
   final String room_id;
   final String severity;
   final String status;
