@@ -37,7 +37,14 @@ class ApiService {
 
     try {
       final response = await http
-          .post(uri, body: jsonEncode(payload))
+          .post(
+            uri,
+            headers: const {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: jsonEncode(payload),
+          )
           .timeout(_timeout);
 
       Map<String, dynamic>? body;
