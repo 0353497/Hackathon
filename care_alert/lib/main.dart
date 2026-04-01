@@ -1,5 +1,5 @@
 import 'package:care_alert/core/app_theme.dart';
-import 'package:care_alert/presentation/pages/main_view.dart';
+import 'package:care_alert/presentation/pages/authecation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -34,7 +34,7 @@ class MainApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: MainView(),
+      home: const AuthecationPage(),
     );
   }
 }
