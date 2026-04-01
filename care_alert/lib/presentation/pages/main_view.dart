@@ -1,4 +1,5 @@
 import 'package:care_alert/presentation/components/tab_page.dart';
+import 'package:care_alert/presentation/pages/alerts_page.dart';
 import 'package:care_alert/presentation/pages/create_alert_page.dart';
 import 'package:care_alert/presentation/pages/dashboard.dart';
 import 'package:care_alert/presentation/pages/settings.dart';
@@ -18,10 +19,7 @@ class _MainViewState extends State<MainView> {
   late final List<Widget> _pages = [
     const Dashboard(),
     const CreateAlertPage(),
-    const TabPage(
-      titleKey: 'meldingen_page_title',
-      icon: Icons.warning_amber_outlined,
-    ),
+    const AlertsPage(),
     const TabPage(
       titleKey: 'notificaties_page_title',
       icon: Icons.notifications_active_outlined,
