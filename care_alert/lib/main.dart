@@ -1,6 +1,8 @@
 import 'package:care_alert/core/app_theme.dart';
 import 'package:care_alert/domain/utils/biometric_auth_service.dart';
 import 'package:care_alert/presentation/pages/main_view.dart';
+import 'package:care_alert/presentation/pages/login_page.dart';
+import 'package:care_alert/presentation/core/auth_controller.dart';
 import 'package:care_alert/presentation/core/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +12,8 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  Get.put(AuthController());
+
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
@@ -76,8 +80,24 @@ class MainApp extends StatelessWidget {
       ],
       darkTheme: ThemeData.dark(),
       themeMode: themeProvider.themeMode,
-      home: const AppLockGate(),
+      home: const AuthGate(),
     );
+  }
+}
+
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      if (AuthController.to.devModeSkipAuth.value ||
+          AuthController.to.isLoggedIn.value) {
+        return const AppLockGate();
+      }
+
+      return const LoginPage();
+    });
   }
 }
 
