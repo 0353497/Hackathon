@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
@@ -23,7 +24,7 @@ class DashboardView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Dashboard',
+                      'dashboard'.tr,
                       style: textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: const Color(0xFF111111),
@@ -31,7 +32,7 @@ class DashboardView extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'Welkom terug, hier is het overzicht van vandaag',
+                      'dashboard_welcome_subtitle'.tr,
                       style: textTheme.bodyMedium?.copyWith(
                         color: const Color(0xFF4E4E4E),
                       ),
@@ -43,50 +44,50 @@ class DashboardView extends StatelessWidget {
                       children: [
                         DashboardActionButton(
                           backgroundColor: const Color(0xFF1F66FF),
-                          label: 'Nieuwe melding',
+                          label: 'new_melding'.tr,
                           icon: Icons.note_add_outlined,
                           onPressed: () {},
                         ),
                         DashboardActionButton(
                           backgroundColor: const Color(0xFFE10019),
-                          label: 'Noodmelding',
+                          label: 'dashboard_emergency_alert'.tr,
                           icon: Icons.warning_amber_rounded,
                           onPressed: () {},
                         ),
                       ],
                     ),
                     const SizedBox(height: 18),
-                    const DashboardStatsCard(
+                    DashboardStatsCard(
                       count: 3,
-                      title: 'Meldingen vandaag',
-                      tagLabel: 'Vandaag',
+                      title: 'dashboard_alerts_today'.tr,
+                      tagLabel: 'dashboard_tag_today'.tr,
                       baseColor: Color(0xFF1A66F8),
                       highlightColor: Color(0xFF1A66F8),
                       leadingIcon: Icons.north_east_rounded,
                     ),
                     const SizedBox(height: 14),
-                    const DashboardStatsCard(
+                    DashboardStatsCard(
                       count: 2,
-                      title: 'Openstaande meldingen',
-                      tagLabel: 'Actief',
+                      title: 'dashboard_open_alerts'.tr,
+                      tagLabel: 'dashboard_tag_active'.tr,
                       baseColor: Color(0xFFE5001A),
                       highlightColor: Color(0xFFE5001A),
                       leadingIcon: Icons.watch_later_outlined,
                     ),
                     const SizedBox(height: 14),
-                    const DashboardStatsCard(
+                    DashboardStatsCard(
                       count: 1,
-                      title: 'Hoge prioriteit',
-                      tagLabel: 'Actief',
+                      title: 'dashboard_high_priority'.tr,
+                      tagLabel: 'dashboard_tag_active'.tr,
                       baseColor: Color(0xFFF56800),
                       highlightColor: Color(0xFFF56800),
                       leadingIcon: Icons.monitor_heart_outlined,
                     ),
                     const SizedBox(height: 14),
-                    const DashboardStatsCard(
+                    DashboardStatsCard(
                       count: 3,
-                      title: 'Afgehandeld',
-                      tagLabel: 'Voltooid',
+                      title: 'dashboard_resolved'.tr,
+                      tagLabel: 'dashboard_tag_completed'.tr,
                       baseColor: Color(0xFF05B946),
                       highlightColor: Color(0xFF05B946),
                       leadingIcon: Icons.check_circle_outline,
@@ -143,11 +144,11 @@ class DashboardTopHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'CareAlert',
+                'dashboard_brand_name'.tr,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 22,
@@ -155,7 +156,7 @@ class DashboardTopHeader extends StatelessWidget {
                 ),
               ),
               Text(
-                'Meldingen & Incidenten',
+                'dashboard_brand_subtitle'.tr,
                 style: TextStyle(
                   color: Color(0xFFD8E5FF),
                   fontSize: 12,
@@ -267,8 +268,10 @@ class DashboardStatsCard extends StatelessWidget {
                     child: Icon(leadingIcon, color: Colors.white),
                   ),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.32),
                       borderRadius: BorderRadius.circular(999),
@@ -338,8 +341,8 @@ class DashboardWeeklyTrendCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Meldingen deze week',
+              Text(
+                'dashboard_alerts_this_week'.tr,
                 style: TextStyle(
                   fontSize: 33,
                   fontWeight: FontWeight.w700,
@@ -349,14 +352,16 @@ class DashboardWeeklyTrendCard extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 5,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFFD8E7FF),
                       borderRadius: BorderRadius.circular(999),
                     ),
-                    child: const Text(
-                      'Week',
+                    child: Text(
+                      'dashboard_week'.tr,
                       style: TextStyle(
                         color: Color(0xFF1D63F0),
                         fontSize: 14,
@@ -365,8 +370,8 @@ class DashboardWeeklyTrendCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  const Text(
-                    'Maand',
+                  Text(
+                    'dashboard_month'.tr,
                     style: TextStyle(
                       color: Color(0xFF374151),
                       fontSize: 14,
@@ -378,8 +383,8 @@ class DashboardWeeklyTrendCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
-          const Text(
-            'Ontwikkeling van het aantal meldingen',
+          Text(
+            'dashboard_alerts_trend_subtitle'.tr,
             style: TextStyle(
               color: Color(0xFF49618A),
               fontSize: 15,
@@ -425,8 +430,8 @@ class DashboardSeverityDistributionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Ernst verdeling',
+          Text(
+            'dashboard_severity_distribution'.tr,
             style: TextStyle(
               fontSize: 35,
               fontWeight: FontWeight.w700,
@@ -434,8 +439,8 @@ class DashboardSeverityDistributionCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          const Text(
-            'Verdeling per prioriteit',
+          Text(
+            'dashboard_distribution_subtitle'.tr,
             style: TextStyle(
               color: Color(0xFF49618A),
               fontSize: 15,
@@ -457,21 +462,21 @@ class DashboardSeverityDistributionCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          const _LegendRow(
+          _LegendRow(
             color: Color(0xFF10B981),
-            label: 'Laag',
+            label: 'severity_low'.tr,
             value: low,
           ),
           const SizedBox(height: 6),
-          const _LegendRow(
+          _LegendRow(
             color: Color(0xFFF59E0B),
-            label: 'Middel',
+            label: 'severity_medium'.tr,
             value: medium,
           ),
           const SizedBox(height: 6),
-          const _LegendRow(
+          _LegendRow(
             color: Color(0xFFEF4444),
-            label: 'Hoog',
+            label: 'severity_high'.tr,
             value: high,
           ),
         ],
@@ -591,10 +596,21 @@ class _WeeklyLineChartPainter extends CustomPainter {
         ),
         textDirection: TextDirection.ltr,
       )..layout();
-      tp.paint(canvas, Offset(chartRect.left - 10 - tp.width, y - tp.height / 2));
+      tp.paint(
+        canvas,
+        Offset(chartRect.left - 10 - tp.width, y - tp.height / 2),
+      );
     }
 
-    const xLabels = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
+    final xLabels = [
+      'dashboard_weekday_mon'.tr,
+      'dashboard_weekday_tue'.tr,
+      'dashboard_weekday_wed'.tr,
+      'dashboard_weekday_thu'.tr,
+      'dashboard_weekday_fri'.tr,
+      'dashboard_weekday_sat'.tr,
+      'dashboard_weekday_sun'.tr,
+    ];
     for (int i = 0; i < xLabels.length; i++) {
       final x = chartRect.left + i * (chartRect.width / 6);
       final tp = TextPainter(
@@ -639,12 +655,7 @@ class _WeeklyLineChartPainter extends CustomPainter {
     }
   }
 
-  void _drawDashedLine(
-    Canvas canvas,
-    Offset start,
-    Offset end,
-    Paint paint,
-  ) {
+  void _drawDashedLine(Canvas canvas, Offset start, Offset end, Paint paint) {
     const dashWidth = 4.0;
     const dashSpace = 3.0;
     final totalLength = (end - start).distance;

@@ -1,3 +1,4 @@
+import 'package:care_alert/core/app_theme.dart';
 import 'package:care_alert/presentation/pages/main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +22,7 @@ class MainApp extends StatelessWidget {
       translations: AppTranslations(),
       locale: Locale(deviceLanguageCode),
       fallbackLocale: const Locale('en'),
+      theme: AppTheme.lightTheme,
       supportedLocales: const [
         Locale('en'),
         Locale('nl'),
