@@ -1,5 +1,7 @@
 import 'package:care_alert/core/app_theme.dart';
+import 'package:care_alert/domain/providers/auth_controller.dart';
 import 'package:care_alert/presentation/pages/authecation.dart';
+import 'package:care_alert/presentation/pages/inlog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,6 +9,7 @@ import 'package:care_alert/core/translations.dart';
 import 'package:get/get.dart';
 
 void main() {
+  Get.put(AuthController());
   runApp(const MainApp());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }
@@ -17,6 +20,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceLanguageCode = Get.deviceLocale?.languageCode ?? 'en';
+    final authController = Get.find<AuthController>();
 
     return GetMaterialApp(
       translations: AppTranslations(),
@@ -34,7 +38,11 @@ class MainApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: const AuthecationPage(),
+      home: Obx(
+        () => authController.isLoggedIn.value
+            ? const AuthecationPage()
+            : const InlogPage(),
+      ),
     );
   }
 }
