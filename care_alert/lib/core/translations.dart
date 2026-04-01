@@ -80,6 +80,11 @@ class AppTranslations extends Translations {
       'number_must_be_six_digits': 'Number must contain exactly 6 digits',
       'team_leader_label': 'Team leader',
       'team_leader_hint': 'Team leader name',
+      'send_alert': 'Send alert',
+      'fill_required_fields': 'Please fill in all required fields',
+      'location_required': 'Location is required',
+      'description_required': 'Description is required',
+      'alert_sent_successfully': 'Alert sent successfully',
     },
     'en_US': {
       'hello_world': 'Hello World!',
@@ -158,6 +163,11 @@ class AppTranslations extends Translations {
       'number_must_be_six_digits': 'Number must contain exactly 6 digits',
       'team_leader_label': 'Team leader',
       'team_leader_hint': 'Team leader name',
+      'send_alert': 'Send alert',
+      'fill_required_fields': 'Please fill in all required fields',
+      'location_required': 'Location is required',
+      'description_required': 'Description is required',
+      'alert_sent_successfully': 'Alert sent successfully',
     },
     'nl': {
       'hello_world': 'Hallo wereld!',
@@ -238,6 +248,11 @@ class AppTranslations extends Translations {
       'number_must_be_six_digits': 'Nummer moet precies 6 cijfers bevatten',
       'team_leader_label': 'Teamleider',
       'team_leader_hint': 'Naam van teamleider',
+      'send_alert': 'Stuur melding',
+      'fill_required_fields': 'Vul alle verplichte velden in',
+      'location_required': 'Locatie is verplicht',
+      'description_required': 'Beschrijving is verplicht',
+      'alert_sent_successfully': 'Melding succesvol verstuurd',
     },
     'nl_NL': {
       'hello_world': 'Hallo wereld!',
@@ -318,6 +333,11 @@ class AppTranslations extends Translations {
       'number_must_be_six_digits': 'Nummer moet precies 6 cijfers bevatten',
       'team_leader_label': 'Teamleider',
       'team_leader_hint': 'Naam van teamleider',
+      'send_alert': 'Stuur melding',
+      'fill_required_fields': 'Vul alle verplichte velden in',
+      'location_required': 'Locatie is verplicht',
+      'description_required': 'Beschrijving is verplicht',
+      'alert_sent_successfully': 'Melding succesvol verstuurd',
     },
   };
 }
