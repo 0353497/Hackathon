@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:care_alert/presentation/components/layout.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -95,11 +96,10 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
-          child: Column(
+    return LayoutPage(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+        child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -258,7 +258,6 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
               ),
             ],
           ),
-        ),
       ),
     );
   }
