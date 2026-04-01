@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:care_alert/core/app_theme.dart';
+import 'package:care_alert/domain/models/ticket.dart';
+import 'package:care_alert/domain/utils/api_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -31,16 +34,76 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
   bool _isFetchingLocation = false;
   String? _selectedType;
   String? _selectedSeverity;
+  late DateTime _selectedDateTime;
 
-  String get _currentDateTime {
+  String _formatDateTime(DateTime value) {
     final locale = Get.locale?.languageCode == 'nl' ? 'nl_NL' : 'en_US';
-    return DateFormat('d-M-y, HH:mm:ss', locale).format(DateTime.now());
+    return DateFormat('d-M-y, HH:mm:ss', locale).format(value);
   }
 
   @override
   void initState() {
     super.initState();
+    _selectedDateTime = DateTime.now();
     _initSpeech();
+  }
+
+  Future<void> _showDateTimePickerDialog() async {
+    final localizations = MaterialLocalizations.of(context);
+    DateTime tempDateTime = _selectedDateTime;
+
+    await showCupertinoModalPopup<void>(
+      context: context,
+      builder: (dialogContext) {
+        return Container(
+          height: 320,
+          color: Colors.white,
+          child: SafeArea(
+            top: false,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 44,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CupertinoButton(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        onPressed: () => Navigator.of(dialogContext).pop(),
+                        child: Text(localizations.cancelButtonLabel),
+                      ),
+                      CupertinoButton(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        onPressed: () {
+                          if (!mounted) {
+                            return;
+                          }
+                          setState(() {
+                            _selectedDateTime = tempDateTime;
+                          });
+                          Navigator.of(dialogContext).pop();
+                        },
+                        child: Text(localizations.okButtonLabel),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.dateAndTime,
+                    initialDateTime: _selectedDateTime,
+                    use24hFormat: true,
+                    onDateTimeChanged: (value) {
+                      tempDateTime = value;
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -267,7 +330,7 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
                     const SizedBox(height: 20),
                     _fieldLabel('date_time_label'.tr),
                     const SizedBox(height: 8),
-                    _disabledField(_currentDateTime),
+                    _dateTimePickerField(),
                     const SizedBox(height: 8),
                     Text(
                       'date_time_auto_hint'.tr,
@@ -400,6 +463,27 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
                         });
                       },
                     ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 48,
+                      child: ElevatedButton(
+                        onPressed: _submitAlert,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primaryBlue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          'send_alert'.tr,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -408,6 +492,66 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _submitAlert() async {
+    if (_selectedType == null || _selectedSeverity == null) {
+      _showSnackBar('fill_required_fields'.tr);
+      return;
+    }
+
+    if (_locationController.text.isEmpty) {
+      _showSnackBar('location_required'.tr);
+      return;
+    }
+
+    if (_descriptionController.text.isEmpty) {
+      _showSnackBar('description_required'.tr);
+      return;
+    }
+
+    final ticket = Ticket(
+      adress: _locationController.text,
+      category: _selectedType ?? '',
+      client: _clientNumberController.text,
+      date: _selectedDateTime,
+      description: _descriptionController.text,
+      email_team_leader: _teamLeaderController.text,
+      employee: _personnelNumberController.text,
+      latitude: '',
+      longitude: '',
+      room_id: '',
+      severity: _selectedSeverity ?? '',
+      status: 'open',
+      ticket: '',
+      title: _selectedType ?? '',
+    );
+
+    final response = await ApiService.sendAlert(ticket);
+
+    if (!mounted) return;
+
+    if (response.success) {
+      _showSnackBar('alert_sent_successfully'.tr);
+      _resetForm();
+    } else {
+      _showSnackBar(response.message);
+    }
+  }
+
+  void _resetForm() {
+    setState(() {
+      _selectedType = null;
+      _selectedSeverity = null;
+      _selectedDateTime = DateTime.now();
+      _locationController.clear();
+      _descriptionController.clear();
+      _peopleController.clear();
+      _personnelNumberController.clear();
+      _clientNumberController.clear();
+      _teamLeaderController.clear();
+      _isListening = false;
+    });
   }
 
   Widget _fieldLabel(String text, {bool requiredField = false}) {
@@ -429,12 +573,19 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
     );
   }
 
-  Widget _disabledField(String value) {
-    return TextFormField(
-      enabled: false,
-      initialValue: value,
-      style: const TextStyle(color: Color(0xFF848B9B), fontSize: 16),
-      decoration: InputDecoration(hintText: ''),
+  Widget _dateTimePickerField() {
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: _showDateTimePickerDialog,
+      child: IgnorePointer(
+        child: TextFormField(
+          initialValue: _formatDateTime(_selectedDateTime),
+          style: const TextStyle(color: Color(0xFF111827), fontSize: 16),
+          decoration: const InputDecoration(
+            suffixIcon: Icon(CupertinoIcons.time),
+          ),
+        ),
+      ),
     );
   }
 
