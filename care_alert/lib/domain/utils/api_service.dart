@@ -88,16 +88,25 @@ class ApiService {
     final uri = Uri.parse('$baseUrl/tickets');
 
     try {
-      final response = await http.get(uri).timeout(_timeout);
+      final response = await http
+          .get(
+            uri,
+            headers: const {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+          )
+          .timeout(_timeout);
+
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final parsed = jsonDecode(response.body);
         List<Ticket> tickets = [];
-        print(parsed[0]);
 
         if (parsed is List) {
           tickets = parsed
-              .cast<Map<String, dynamic>>()
-              .map((item) => Ticket.fromJson(item))
+              .whereType<Map>()
+              .map((item) => Map<String, dynamic>.from(item))
+              .map(Ticket.fromJson)
               .toList();
         }
 
