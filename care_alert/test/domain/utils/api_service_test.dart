@@ -118,7 +118,7 @@ void main() {
         title: 'Test',
       );
       print('Testing with ticket: ${ticket.toJson()}');
-      print('URL: http://145.97.93.252:5000/tickets');
+      print('URL: http://192.168.137.49:5000/tickets');
 
       final response = await ApiService.sendAlert(ticket);
 print('Received response: success=${response.success}, message="${response.message}", statusCode=${response.statusCode}');

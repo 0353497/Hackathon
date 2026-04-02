@@ -18,7 +18,7 @@ class ApiResponse {
 }
 
 class ApiService {
-  static const String baseUrl = 'http://172.20.10.6:5000';
+  static const String baseUrl = 'http://145.97.93.252:5000';
   static const Duration _timeout = Duration(seconds: 15);
 
   static Future<ApiResponse> sendAlert(Ticket ticket) async {
