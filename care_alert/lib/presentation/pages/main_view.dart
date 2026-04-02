@@ -22,10 +22,6 @@ class _MainViewState extends State<MainView> {
     const CreateAlertPage(),
     const AlertsPage(),
     const RapportagePage(),
-    const TabPage(
-      titleKey: 'notificaties_page_title',
-      icon: Icons.notifications_active_outlined,
-    ),
     const SettingsPage(),
   ];
 
@@ -49,7 +45,7 @@ class _MainViewState extends State<MainView> {
           NavigationDestination(
             icon: const Icon(Icons.add_alert_outlined),
             selectedIcon: const Icon(Icons.add_alert),
-            label: 'new_melding'.tr,
+            label: 'new_melding_short'.tr,
           ),
           NavigationDestination(
             icon: const Icon(Icons.warning_amber_outlined),
@@ -60,11 +56,6 @@ class _MainViewState extends State<MainView> {
             icon: Icon(Icons.description_outlined),
             selectedIcon: Icon(Icons.description),
             label: 'Rapportage',
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.notifications_none_outlined),
-            selectedIcon: const Icon(Icons.notifications),
-            label: 'notificaties'.tr,
           ),
           NavigationDestination(
             icon: const Icon(Icons.settings_outlined),

@@ -19,12 +19,6 @@ class _SettingsComponentState extends State<SettingsComponent> {
   String language = 'nl';
   String role = 'Medewerker';
 
-  void _saveSettings() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Instellingen opgeslagen')),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -231,25 +225,6 @@ class _SettingsComponentState extends State<SettingsComponent> {
                 ],
               ),
             ),
-          ),
-          const SizedBox(height: 16),
-          // Opslaan/Annuleren
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: _saveSettings,
-                  child: const Text('Instellingen opslaan'),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () {},
-                  child: const Text('Annuleren'),
-                ),
-              ),
-            ],
           ),
           const SizedBox(height: 16),
           Card(
