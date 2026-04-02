@@ -125,15 +125,18 @@ class _LayoutPageState extends State<LayoutPage> {
                           ),
                         ],
                       ),
-                      ElevatedButton.icon(
-                        onPressed: _handleEmergencyClick,
-                        icon: const Icon(Icons.warning, color: Colors.white),
-                        label: const Text('Noodmelding'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                          elevation: 4,
+                      Tooltip(
+                        message: 'Noodmelding',
+                        child: ElevatedButton(
+                          onPressed: _handleEmergencyClick,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            padding: const EdgeInsets.all(12),
+                            minimumSize: const Size(48, 48),
+                            elevation: 4,
+                          ),
+                          child: const Icon(Icons.warning, color: Colors.white),
                         ),
                       ),
                     ],

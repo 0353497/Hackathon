@@ -32,6 +32,8 @@
 	<string>Deze app gebruikt je locatie om automatisch het huidige adres in te vullen bij een melding.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Deze app gebruikt spraakherkenning om beschrijvingen sneller in te voeren.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Deze app gebruikt Face ID om de app veilig te ontgrendelen.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

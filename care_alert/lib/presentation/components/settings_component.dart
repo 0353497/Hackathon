@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import '../pages/logout_page.dart';
 import '../core/theme_provider.dart';
 
 class SettingsComponent extends StatefulWidget {
@@ -136,10 +137,6 @@ class _SettingsComponentState extends State<SettingsComponent> {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  OutlinedButton(
-                    onPressed: () {},
-                    child: const Text('Twee-factor authenticatie instellen'),
-                  ),
                 ],
               ),
             ),
@@ -253,6 +250,41 @@ class _SettingsComponentState extends State<SettingsComponent> {
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: 16),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: const [
+                      Icon(Icons.logout),
+                      SizedBox(width: 8),
+                      Text('Sessie', style: TextStyle(fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  const Text('Beheer je actieve sessie'),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const LogoutPage(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.logout),
+                      label: const Text('Ga naar uitlogpagina'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

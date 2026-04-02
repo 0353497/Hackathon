@@ -1,6 +1,7 @@
 import 'package:care_alert/presentation/components/tab_page.dart';
 import 'package:care_alert/presentation/pages/create_alert_page.dart';
 import 'package:care_alert/presentation/pages/dashboard.dart';
+import 'package:care_alert/presentation/pages/rapportage_page.dart';
 import 'package:care_alert/presentation/pages/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
@@ -22,6 +23,7 @@ class _MainViewState extends State<MainView> {
       titleKey: 'meldingen_page_title',
       icon: Icons.warning_amber_outlined,
     ),
+    const RapportagePage(),
     const TabPage(
       titleKey: 'notificaties_page_title',
       icon: Icons.notifications_active_outlined,
@@ -55,6 +57,11 @@ class _MainViewState extends State<MainView> {
             icon: const Icon(Icons.warning_amber_outlined),
             selectedIcon: const Icon(Icons.warning_amber),
             label: 'meldingen'.tr,
+          ),
+          const NavigationDestination(
+            icon: Icon(Icons.description_outlined),
+            selectedIcon: Icon(Icons.description),
+            label: 'Rapportage',
           ),
           NavigationDestination(
             icon: const Icon(Icons.notifications_none_outlined),
