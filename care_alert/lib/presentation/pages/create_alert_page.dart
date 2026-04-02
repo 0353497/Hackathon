@@ -6,6 +6,7 @@ import 'package:care_alert/domain/utils/api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:care_alert/presentation/components/layout.dart';
+import 'package:care_alert/data/users.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -34,6 +35,7 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
   bool _speechAvailable = false;
   bool _isListening = false;
   bool _isFetchingLocation = false;
+  bool _peopleAutocompleteListenerAttached = false;
   String? _selectedType;
   String? _selectedSeverity;
   late DateTime _selectedDateTime;
@@ -428,9 +430,52 @@ class _CreateAlertPageState extends State<CreateAlertPage> {
                   const SizedBox(height: 20),
                   _fieldLabel('involved_people_label'.tr),
                   const SizedBox(height: 8),
-                  _textField(
-                    controller: _peopleController,
-                    hint: 'involved_people_hint'.tr,
+                  Autocomplete<String>(
+                    optionsBuilder: (TextEditingValue textEditingValue) {
+                      if (textEditingValue.text.isEmpty) {
+                        return const Iterable<String>.empty();
+                      }
+
+                      return users
+                          .map((user) => user.name)
+                          .where(
+                            (name) => name.toLowerCase().contains(
+                              textEditingValue.text.toLowerCase(),
+                            ),
+                          );
+                    },
+                    displayStringForOption: (option) => option,
+                    fieldViewBuilder:
+                        (
+                          context,
+                          textEditingController,
+                          focusNode,
+                          onFieldSubmitted,
+                        ) {
+                          if (!_peopleAutocompleteListenerAttached) {
+                            _peopleAutocompleteListenerAttached = true;
+                            textEditingController.text = _peopleController.text;
+                            textEditingController.selection =
+                                _peopleController.selection;
+                            textEditingController.addListener(() {
+                              _peopleController.value =
+                                  textEditingController.value;
+                            });
+                          }
+
+                          return TextFormField(
+                            controller: textEditingController,
+                            focusNode: focusNode,
+                            onFieldSubmitted: (value) => onFieldSubmitted(),
+                            decoration: InputDecoration(
+                              hintText: 'involved_people_hint'.tr,
+                              counterText: '',
+                            ),
+                          );
+                        },
+                    onSelected: (selection) {
+                      _peopleController.text = selection;
+                    },
                   ),
                   const SizedBox(height: 20),
                   _fieldLabel('severity_label'.tr, requiredField: true),
