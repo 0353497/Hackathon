@@ -49,6 +49,8 @@ class AppTranslations extends Translations {
       'date_time_auto_hint': 'Automatically filled with current date and time',
       'location_label': 'Location / Department',
       'location_hint': 'E.g. Ward A - Room 12',
+      'room_label': 'Room (optional)',
+      'room_hint': 'E.g. Room 101',
       'description_label': 'What happened?',
       'description_hint':
           'Describe the incident in as much detail as possible...',
@@ -65,28 +67,28 @@ class AppTranslations extends Translations {
       'listening_hint': 'Listening... Tap again to stop.',
       'stt_not_available':
           'Speech recognition is not available on this device.',
-        'dashboard_welcome': 'Welcome to CareAlert',
-        'dashboard_question': 'What would you like to report?',
-        'dashboard_hint': 'Tap a report type to get started',
-        'textHint': 'Tap a report type to get started',
-        'dashboard_new_report': 'New Report',
-        'dashboard_card_care_title': 'Care / Incident',
-        'dashboard_card_care_subtitle': 'MIC / MIM',
-        'dashboard_card_care_description':
+      'dashboard_welcome': 'Welcome to CareAlert',
+      'dashboard_question': 'What would you like to report?',
+      'dashboard_hint': 'Tap a report type to get started',
+      'textHint': 'Tap a report type to get started',
+      'dashboard_new_report': 'New Report',
+      'dashboard_card_care_title': 'Care / Incident',
+      'dashboard_card_care_subtitle': 'MIC / MIM',
+      'dashboard_card_care_description':
           'For Client Incident Reports (MIC) or Employee Incident Reports (MIM)',
-        'dashboard_card_facility_title': 'Facility',
-        'dashboard_card_facility_subtitle': 'Defects & Malfunctions',
-        'dashboard_card_facility_description':
+      'dashboard_card_facility_title': 'Facility',
+      'dashboard_card_facility_subtitle': 'Defects & Malfunctions',
+      'dashboard_card_facility_description':
           'For defects, fire alarms, malfunctions or emergencies',
-        'dashboard_how_it_works': 'How does it work?',
-        'dashboard_step_1': '1. Tap the report type you want to create',
-        'dashboard_step_2': '2. Use voice input or type your report',
-        'dashboard_step_3': '3. Add a photo if needed',
-        'dashboard_step_4': '4. Send it - your report is forwarded automatically',
-        'dashboard_auto_info':
+      'dashboard_how_it_works': 'How does it work?',
+      'dashboard_step_1': '1. Tap the report type you want to create',
+      'dashboard_step_2': '2. Use voice input or type your report',
+      'dashboard_step_3': '3. Add a photo if needed',
+      'dashboard_step_4': '4. Send it - your report is forwarded automatically',
+      'dashboard_auto_info':
           'Your name, location and timestamp are added automatically',
-        'dashboard_my_reports': 'My Reports',
-        'dashboard_soap_reports': 'SOAP Reports',
+      'dashboard_my_reports': 'My Reports',
+      'dashboard_soap_reports': 'SOAP Reports',
       'use_current_location': 'Use current address',
       'location_service_disabled': 'Location services are disabled.',
       'location_permission_denied':
@@ -154,6 +156,8 @@ class AppTranslations extends Translations {
       'date_time_auto_hint': 'Automatically filled with current date and time',
       'location_label': 'Location / Department',
       'location_hint': 'E.g. Ward A - Room 12',
+      'room_label': 'Room (optional)',
+      'room_hint': 'E.g. Room 101',
       'description_label': 'What happened?',
       'description_hint':
           'Describe the incident in as much detail as possible...',
@@ -170,28 +174,28 @@ class AppTranslations extends Translations {
       'listening_hint': 'Listening... Tap again to stop.',
       'stt_not_available':
           'Speech recognition is not available on this device.',
-        'dashboard_welcome': 'Welcome to CareAlert',
-        'dashboard_question': 'What would you like to report?',
-        'dashboard_hint': 'Tap a report type to get started',
-        'textHint': 'Tap a report type to get started',
-        'dashboard_new_report': 'New Report',
-        'dashboard_card_care_title': 'Care / Incident',
-        'dashboard_card_care_subtitle': 'MIC / MIM',
-        'dashboard_card_care_description':
+      'dashboard_welcome': 'Welcome to CareAlert',
+      'dashboard_question': 'What would you like to report?',
+      'dashboard_hint': 'Tap a report type to get started',
+      'textHint': 'Tap a report type to get started',
+      'dashboard_new_report': 'New Report',
+      'dashboard_card_care_title': 'Care / Incident',
+      'dashboard_card_care_subtitle': 'MIC / MIM',
+      'dashboard_card_care_description':
           'For Client Incident Reports (MIC) or Employee Incident Reports (MIM)',
-        'dashboard_card_facility_title': 'Facility',
-        'dashboard_card_facility_subtitle': 'Defects & Malfunctions',
-        'dashboard_card_facility_description':
+      'dashboard_card_facility_title': 'Facility',
+      'dashboard_card_facility_subtitle': 'Defects & Malfunctions',
+      'dashboard_card_facility_description':
           'For defects, fire alarms, malfunctions or emergencies',
-        'dashboard_how_it_works': 'How does it work?',
-        'dashboard_step_1': '1. Tap the report type you want to create',
-        'dashboard_step_2': '2. Use voice input or type your report',
-        'dashboard_step_3': '3. Add a photo if needed',
-        'dashboard_step_4': '4. Send it - your report is forwarded automatically',
-        'dashboard_auto_info':
+      'dashboard_how_it_works': 'How does it work?',
+      'dashboard_step_1': '1. Tap the report type you want to create',
+      'dashboard_step_2': '2. Use voice input or type your report',
+      'dashboard_step_3': '3. Add a photo if needed',
+      'dashboard_step_4': '4. Send it - your report is forwarded automatically',
+      'dashboard_auto_info':
           'Your name, location and timestamp are added automatically',
-        'dashboard_my_reports': 'My Reports',
-        'dashboard_soap_reports': 'SOAP Reports',
+      'dashboard_my_reports': 'My Reports',
+      'dashboard_soap_reports': 'SOAP Reports',
       'use_current_location': 'Use current address',
       'location_service_disabled': 'Location services are disabled.',
       'location_permission_denied':
@@ -261,6 +265,8 @@ class AppTranslations extends Translations {
       'date_time_auto_hint': 'Automatisch ingevuld met huidige datum en tijd',
       'location_label': 'Locatie / Afdeling',
       'location_hint': 'Bijv. Afdeling A - Kamer 12',
+      'room_label': 'Kamer (optioneel)',
+      'room_hint': 'Bijv. Kamer 101',
       'description_label': 'Wat is er gebeurd?',
       'description_hint': 'Beschrijf het incident zo gedetailleerd mogelijk...',
       'involved_people_label': 'Betrokken personen',
@@ -277,29 +283,29 @@ class AppTranslations extends Translations {
       'listening_hint': 'Aan het luisteren... Tik opnieuw om te stoppen.',
       'stt_not_available':
           'Spraakherkenning is niet beschikbaar op dit apparaat.',
-        'dashboard_welcome': 'Welkom bij CareAlert',
-        'dashboard_question': 'Wat wilt u melden?',
-        'dashboard_hint': 'Klik op het type melding om te beginnen',
-        'textHint': 'Klik op het type melding om te beginnen',
-        'dashboard_new_report': 'Nieuwe Melding',
-        'dashboard_card_care_title': 'Zorg / Incident',
-        'dashboard_card_care_subtitle': 'MIC / MIM',
-        'dashboard_card_care_description':
+      'dashboard_welcome': 'Welkom bij CareAlert',
+      'dashboard_question': 'Wat wilt u melden?',
+      'dashboard_hint': 'Klik op het type melding om te beginnen',
+      'textHint': 'Klik op het type melding om te beginnen',
+      'dashboard_new_report': 'Nieuwe Melding',
+      'dashboard_card_care_title': 'Zorg / Incident',
+      'dashboard_card_care_subtitle': 'MIC / MIM',
+      'dashboard_card_care_description':
           'Voor Melding Incident Client (MIC) of Melding Incident Medewerker (MIM)',
-        'dashboard_card_facility_title': 'Facilitair',
-        'dashboard_card_facility_subtitle': 'Gebreken & Storingen',
-        'dashboard_card_facility_description':
+      'dashboard_card_facility_title': 'Facilitair',
+      'dashboard_card_facility_subtitle': 'Gebreken & Storingen',
+      'dashboard_card_facility_description':
           'Voor gebreken, brandmeldingen, storingen of calamiteiten',
-        'dashboard_how_it_works': 'Hoe werkt het?',
-        'dashboard_step_1': '1. Klik op het type melding dat u wilt maken',
-        'dashboard_step_2': '2. Gebruik spraak of typ uw melding in',
-        'dashboard_step_3': '3. Voeg indien nodig een foto toe',
-        'dashboard_step_4':
+      'dashboard_how_it_works': 'Hoe werkt het?',
+      'dashboard_step_1': '1. Klik op het type melding dat u wilt maken',
+      'dashboard_step_2': '2. Gebruik spraak of typ uw melding in',
+      'dashboard_step_3': '3. Voeg indien nodig een foto toe',
+      'dashboard_step_4':
           '4. Verstuur - uw melding wordt automatisch doorgestuurd',
-        'dashboard_auto_info':
+      'dashboard_auto_info':
           'Uw naam, locatie en tijdstip worden automatisch toegevoegd',
-        'dashboard_my_reports': 'Mijn Meldingen',
-        'dashboard_soap_reports': 'SOAP Rapporten',
+      'dashboard_my_reports': 'Mijn Meldingen',
+      'dashboard_soap_reports': 'SOAP Rapporten',
       'use_current_location': 'Gebruik huidig adres',
       'location_service_disabled': 'Locatieservices staan uit.',
       'location_permission_denied':
@@ -369,6 +375,8 @@ class AppTranslations extends Translations {
       'date_time_auto_hint': 'Automatisch ingevuld met huidige datum en tijd',
       'location_label': 'Locatie / Afdeling',
       'location_hint': 'Bijv. Afdeling A - Kamer 12',
+      'room_label': 'Kamer (optioneel)',
+      'room_hint': 'Bijv. Kamer 101',
       'description_label': 'Wat is er gebeurd?',
       'description_hint': 'Beschrijf het incident zo gedetailleerd mogelijk...',
       'involved_people_label': 'Betrokken personen',
@@ -385,29 +393,29 @@ class AppTranslations extends Translations {
       'listening_hint': 'Aan het luisteren... Tik opnieuw om te stoppen.',
       'stt_not_available':
           'Spraakherkenning is niet beschikbaar op dit apparaat.',
-        'dashboard_welcome': 'Welkom bij CareAlert',
-        'dashboard_question': 'Wat wilt u melden?',
-        'dashboard_hint': 'Klik op het type melding om te beginnen',
-        'textHint': 'Klik op het type melding om te beginnen',
-        'dashboard_new_report': 'Nieuwe Melding',
-        'dashboard_card_care_title': 'Zorg / Incident',
-        'dashboard_card_care_subtitle': 'MIC / MIM',
-        'dashboard_card_care_description':
+      'dashboard_welcome': 'Welkom bij CareAlert',
+      'dashboard_question': 'Wat wilt u melden?',
+      'dashboard_hint': 'Klik op het type melding om te beginnen',
+      'textHint': 'Klik op het type melding om te beginnen',
+      'dashboard_new_report': 'Nieuwe Melding',
+      'dashboard_card_care_title': 'Zorg / Incident',
+      'dashboard_card_care_subtitle': 'MIC / MIM',
+      'dashboard_card_care_description':
           'Voor Melding Incident Client (MIC) of Melding Incident Medewerker (MIM)',
-        'dashboard_card_facility_title': 'Facilitair',
-        'dashboard_card_facility_subtitle': 'Gebreken & Storingen',
-        'dashboard_card_facility_description':
+      'dashboard_card_facility_title': 'Facilitair',
+      'dashboard_card_facility_subtitle': 'Gebreken & Storingen',
+      'dashboard_card_facility_description':
           'Voor gebreken, brandmeldingen, storingen of calamiteiten',
-        'dashboard_how_it_works': 'Hoe werkt het?',
-        'dashboard_step_1': '1. Klik op het type melding dat u wilt maken',
-        'dashboard_step_2': '2. Gebruik spraak of typ uw melding in',
-        'dashboard_step_3': '3. Voeg indien nodig een foto toe',
-        'dashboard_step_4':
+      'dashboard_how_it_works': 'Hoe werkt het?',
+      'dashboard_step_1': '1. Klik op het type melding dat u wilt maken',
+      'dashboard_step_2': '2. Gebruik spraak of typ uw melding in',
+      'dashboard_step_3': '3. Voeg indien nodig een foto toe',
+      'dashboard_step_4':
           '4. Verstuur - uw melding wordt automatisch doorgestuurd',
-        'dashboard_auto_info':
+      'dashboard_auto_info':
           'Uw naam, locatie en tijdstip worden automatisch toegevoegd',
-        'dashboard_my_reports': 'Mijn Meldingen',
-        'dashboard_soap_reports': 'SOAP Rapporten',
+      'dashboard_my_reports': 'Mijn Meldingen',
+      'dashboard_soap_reports': 'SOAP Rapporten',
       'use_current_location': 'Gebruik huidig adres',
       'location_service_disabled': 'Locatieservices staan uit.',
       'location_permission_denied':

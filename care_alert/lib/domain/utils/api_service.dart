@@ -39,7 +39,10 @@ class ApiService {
       final response = await http
           .post(
             uri,
-          
+            headers: const {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
             body: jsonEncode(payload),
           )
           .timeout(_timeout);
@@ -85,11 +88,7 @@ class ApiService {
     final uri = Uri.parse('$baseUrl/tickets');
 
     try {
-      final response = await http
-          .get(
-            uri,
-          )
-          .timeout(_timeout);
+      final response = await http.get(uri).timeout(_timeout);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final parsed = jsonDecode(response.body);
         List<Ticket> tickets = [];
