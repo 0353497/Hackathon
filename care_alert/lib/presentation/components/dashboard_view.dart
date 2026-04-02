@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:care_alert/presentation/components/layout.dart';
+import 'package:care_alert/presentation/components/ticket_card.dart';
+import 'package:care_alert/domain/models/ticket.dart';
+import 'package:care_alert/domain/utils/api_service.dart';
 import 'package:get/get.dart';
 
 class DashboardView extends StatelessWidget {
@@ -212,6 +215,8 @@ class DashboardContent extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
+          const _RecentTicketsSection(),
+          const SizedBox(height: 16),
           // Snelle toegang
           Row(
             children: [
@@ -233,6 +238,118 @@ class DashboardContent extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _RecentTicketsSection extends StatefulWidget {
+  const _RecentTicketsSection();
+
+  @override
+  State<_RecentTicketsSection> createState() => _RecentTicketsSectionState();
+}
+
+class _RecentTicketsSectionState extends State<_RecentTicketsSection> {
+  late Future<ApiResponse> _ticketsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _ticketsFuture = ApiService.fetchTickets();
+  }
+
+  void _refreshTickets() {
+    setState(() {
+      _ticketsFuture = ApiService.fetchTickets();
+    });
+  }
+
+  List<Ticket> _extractTickets(ApiResponse response) {
+    final raw = response.data?['tickets'];
+    if (raw is List<Ticket>) {
+      return raw;
+    }
+    return <Ticket>[];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Colors.grey.shade300),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Laatste tickets',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: _refreshTickets,
+                  icon: const Icon(Icons.refresh),
+                  tooltip: 'Opnieuw laden',
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            FutureBuilder<ApiResponse>(
+              future: _ticketsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+
+                if (snapshot.hasError) {
+                  return const Text(
+                    'Kon tickets niet laden. Probeer opnieuw.',
+                    style: TextStyle(color: Colors.red),
+                  );
+                }
+
+                final response = snapshot.data;
+                if (response == null || !response.success) {
+                  return Text(
+                    response?.message ?? 'Geen data ontvangen.',
+                    style: const TextStyle(color: Colors.red),
+                  );
+                }
+
+                final tickets = _extractTickets(response);
+                if (tickets.isEmpty) {
+                  return const Text('Er zijn nog geen tickets beschikbaar.');
+                }
+
+                final sortedTickets = [...tickets]
+                  ..sort((a, b) => b.date.compareTo(a.date));
+                final latestTickets = sortedTickets.take(5).toList();
+
+                return Column(
+                  children: [
+                    for (final ticket in latestTickets) ...[
+                      TicketCard(ticket: ticket),
+                      const SizedBox(height: 8),
+                    ],
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
